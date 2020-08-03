@@ -1,0 +1,32 @@
+function send_gmail(date,data) {
+  MailApp.sendEmail({
+    to: 'a',
+    subject: '★'+date+'日の気になるNHK放送★',
+    htmlBody: htmlBody(data)
+  });
+}  
+    
+
+
+function htmlBody(data){
+  var html='';
+  var dic = ['id ','開始時間 ','放送地域 ','チャンネル ','タイトル ','サブタイ ','出演者 ','ジャンル '];
+  var stockList = [];　//ここが配列になる
+//  Logger.log(data);
+  html+='<h2>NHKのおすすめ番組リスト</h2>'
+  var j = 0;
+  for (var i=0; i<data.length; i++){
+    stockList.push('<li><font color"black">'+dic[j]+' : '+data[i]+'</font></li>'); //ここにpush()がくる
+    Logger.log(data[i]);
+    j = j+1;
+    if(j==dic.length){
+      j=0
+      stockList.push('<p>--------------------------------------------------------------------------------\n\n</p>');
+    }
+  }
+  stockList = stockList.join('');
+  html+= stockList +'<p>\n--------------------------------------------------------------------------------\n\n</p>';
+  html.replace(/,/g, '');
+  Logger.log(html);
+  return html
+}
